@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CircleButton from '../CircleButton/CircleButton'
 import { countNotesForFolder } from '../notes-helpers'
 import './NoteListNav.css'
+import AddFolder from '../AddFolder/addFolder'
+
+
 
 export default function NoteListNav(props) {
   return (
@@ -25,15 +28,20 @@ export default function NoteListNav(props) {
       </ul>
       <div className='NoteListNav__button-wrapper'>
         <CircleButton
-          tag={Link}
+        
+          tag={Link}  
           to='/add-folder'
           type='button'
           className='NoteListNav__add-folder-button'
         >
           <FontAwesomeIcon icon='plus' />
           <br />
+          
           Folder
+         
         </CircleButton>
+        < AddFolder />
+        
       </div>
     </div>
   )
