@@ -1,6 +1,5 @@
 import React from 'react'
 import ApiContext from '../ApiContext'
-import { Route } from 'react-router-dom';
 
 export default class AddNote extends React.Component {
 
@@ -14,9 +13,10 @@ export default class AddNote extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const name = this.state.folderName;
+    const name = e.target.noteName;
     
-    fetch('http://localhost:9090/folders', 
+
+    fetch('http://localhost:9090/notes', 
     {
       method: 'POST',
       headers: {
@@ -24,14 +24,21 @@ export default class AddNote extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: name,   
+        name: name.value, 
+        folderId: e.target.FolderId.value,
+        content: e.target.noteContent.value,
+        modified: new Date().toISOString()
       })
     })
   .then(response => response.json())
   .then((responseJson) => {
-      this.context.AddNote(responseJson)
-      this.props.history.push('/');
-    })
+    this.context.addNote(responseJson)
+    this.props.history.push('/');
+  })
+  .catch(error => {
+    console.log(error)
+    alert('Adding note did not work')
+  })
   }
 
 
@@ -42,14 +49,11 @@ export default class AddNote extends React.Component {
         <label>
           New note name:
         </label>
-    <input type="input" className="nameInput" onChange={
-      (e) => this.setState({
-        NoteName: e.target.value
-        
-      })
-      }>
-
-      </input>
+    <input required type="input" className="nameInput" name="noteName">
+        </input>
+      <select name={'FolderId'}>{this.context.folders.map(folders => {
+        return <option value={folders.id}>{folders.name}</option>})}</select>
+      <textarea name={'noteContent'}></textarea>
       <button type="submit" className="submitName">Submit Name</button>
       </form>
     )

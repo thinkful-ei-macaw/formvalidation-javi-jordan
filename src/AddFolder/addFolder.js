@@ -1,11 +1,11 @@
 import React from 'react'
 import ApiContext from '../ApiContext'
-import { Route } from 'react-router-dom';
 
 export default class AddFolder extends React.Component {
 
     state = {
       folderName: ''
+
   }
 
 
@@ -32,9 +32,10 @@ export default class AddFolder extends React.Component {
       this.context.addFolder(responseJson)
       this.props.history.push('/');
     })
+  .catch(error => {
+    alert('Adding folder did not work')
+  })
   }
-
-
 
   render() {
     return (
