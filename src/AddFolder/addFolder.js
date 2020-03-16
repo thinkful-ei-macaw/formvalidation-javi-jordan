@@ -43,7 +43,7 @@ export default class AddFolder extends React.Component {
         <label>
           New folder name:
         </label>
-    <input type="input" className="nameInput" onChange={
+    <input required type="input" className="nameInput" onChange={
       (e) => this.setState({
         folderName: e.target.value
         
